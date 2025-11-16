@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Madina Super Shopee</title>
+  <meta name="description" content="Madina Super Shopee - Fresh groceries & essentials. Demo site with signup/login, orders, cancel and themes." />
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <div class="logo">MS</div>
+      <div>
+        <h1 id="storeName">Madina Super Shopee</h1>
+        <div class="tag">Fresh • Affordable • Nearby</div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <div class="search-wrap">
+        <input id="search" placeholder="Search products, e.g., rice, milk..." />
+        <select id="categoryFilter">
+          <option value="All">All categories</option>
+        </select>
+        <select id="sortBy">
+          <option value="popular">Popular</option>
+          <option value="price-asc">Price: Low → High</option>
+          <option value="price-desc">Price: High → Low</option>
+        </select>
+      </div>
+
+      <div class="user-actions">
+        <button class="btn ghost" id="themeBtn">Theme</button>
+        <button class="btn ghost" id="ordersBtn">My Orders (<span id="ordersCount">0</span>)</button>
+        <button class="btn" id="cartBtn">Cart (<span id="cartCount">0</span>)</button>
+        <div id="authBox">
+          <button class="btn ghost" id="loginBtn">Login</button>
+          <button class="btn" id="signupBtn">Sign up</button>
+        </div>
+        <div id="userInfo" style="display:none">
+          <span id="userNameShow"></span>
+          <button class="btn ghost" id="logoutBtn">Logout</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <aside class="sidebar">
+      <h3>Categories</h3>
+      <ul id="categoryList"></ul>
+
+      <h3>Quick Filters</h3>
+      <button class="btn ghost" id="freshBtn">Fresh</button>
+      <button class="btn ghost" id="organicBtn">Organic</button>
+      <div class="owner-card">
+        <h4>Owner</h4>
+        <div><strong>Mr. Ahmed Khan</strong></div>
+        <div>Madina Super Shopee</div>
+        <div>Shop #12, Market Road, Parbhani, Maharashtra - 431401</div>
+        <div>Phone: +91 98765 43210</div>
+      </div>
+    </aside>
+
+    <section class="content">
+      <section class="hero">
+        <div>
+          <h2>Welcome to Madina Super Shopee</h2>
+          <p>Daily essentials, fruits, vegetables, staples, dairy, and much more. Local delivery available.</p>
+        </div>
+        <div><button class="btn" id="quickCheckout">Quick Checkout</button></div>
+      </section>
+
+      <section class="products" id="productsGrid">
+        <!-- product cards go here -->
+      </section>
+    </section>
+  </main>
+
+  <!-- Floating cart -->
+  <div class="cart-panel" id="cartPanel" aria-live="polite">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="btn ghost" id="closeCart">Close</button>
+    </div>
+    <div id="cartItems"></div>
+    <div class="cart-footer">
+      <div>Total: <strong id="cartTotal">₹0.00</strong></div>
+      <div>
+        <button class="btn ghost" id="clearCart">Clear</button>
+        <button class="btn" id="checkout">Checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Orders modal -->
+  <div class="modal" id="ordersModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Your Orders</h3>
+        <button class="btn ghost" id="closeOrders">Close</button>
+      </div>
+      <div id="ordersList"></div>
+    </div>
+  </div>
+
+  <!-- Auth modal -->
+  <div class="modal" id="authModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="authTitle">Login</h3>
+        <button class="btn ghost" id="closeAuth">Close</button>
+      </div>
+      <div class="form" id="authForm">
+        <input id="authName" placeholder="Full name (for signup)" style="display:none" />
+        <input id="authEmail" placeholder="Email or phone" />
+        <input id="authPass" placeholder="Password" type="password" />
+        <div style="display:flex;gap:8px;margin-top:10px">
+          <button class="btn" id="authSubmit">Submit</button>
+          <button class="btn ghost" id="switchAuth">Switch to Sign up</button>
+        </div>
+        <div class="small hint">Demo authentication stored locally in your browser (localStorage)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout modal -->
+  <div class="modal" id="checkoutModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>Checkout</h3>
+        <button class="btn ghost" id="closeCheckout">Close</button>
+      </div>
+      <div>
+        <div style="display:flex;gap:8px">
+          <input class="field" id="custName" placeholder="Full name" />
+          <input class="field" id="custPhone" placeholder="Phone" />
+        </div>
+        <input class="field" id="custAddress" placeholder="Delivery address" style="margin-top:8px" />
+        <div style="margin-top:8px">Payment: <select id="payMethod"><option>Cash on Delivery</option><option>UPI (demo)</option></select></div>
+
+        <div id="checkoutSummary" style="margin-top:12px"></div>
+
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="btn" id="placeOrder">Place Order</button>
+          <button class="btn ghost" id="exportOrder">Export JSON</button>
+        </div>
+        <div class="order-json" id="orderJson" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div>
+      <strong>Madina Super Shopee</strong>
+      <div>Shop #12, Market Road, Parbhani, Maharashtra - 431401</div>
+      <div>Owner: Mr. Ahmed Khan • Phone: +91 98765 43210</div>
+    </div>
+    <div class="theme-picker">
+      <label>Theme:</label>
+      <select id="themeSelect">
+        <option value="green">Green</option>
+        <option value="blue">Blue</option>
+        <option value="orange">Orange</option>
+        <option value="dark">Dark</option>
+      </select>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
